@@ -1,0 +1,6 @@
+*~
+*.orig
+*.py[cod]
+*.swp
+patrimonioULL/settings.py
+media/images
