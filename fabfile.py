@@ -36,7 +36,7 @@ def version():
 
 def download():
     version()
-    sudo('git clone -b %s --single-branch %s %s/releases/%s' % (env.branch, env.repo, env.path, env.release))
+    sudo('git clone -b %s %s %s/releases/%s' % (env.branch, env.repo, env.path, env.release))
 
 def install_requirements():
     sudo('source %s/VIRTUALENV/bin/activate && pip install -r %s/releases/%s/requirements.txt' % (env.path, env.path, env.release))
@@ -44,6 +44,12 @@ def install_requirements():
 def symlink_current_release():
     sudo('rm -rf %s/%s' % (env.path, env.project_name))
     sudo('ln -s %s/releases/%s %s/%s' % (env.path, env.release, env.path, env.project_name))
+    
+    sudo('rm -rf %s/%s/media/images' % (env.path, env.project_name))
+    sudo('ln -s %s/shared/media/images %s/%s/media/' % (env.path, env.path, env.project_name))
+    
+    sudo('rm -rf %s/%s/%s/settings.py' % (env.path, env.project_name, env.project_name))
+    sudo('ln -s %s/shared/settings.py %s/%s/%s/' % (env.path, env.path, env.project_name, env.project_name))
 
 def deploy():
     download()
