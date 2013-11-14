@@ -8,7 +8,7 @@ env.branch = 'master'
 
 def development():
     """Development Environment"""
-    env.path = '~/PATRIMONIO-ULL-TEST'
+    env.path = '~/PATRIMONIO-ULL'
     env.hosts = ['localhost']
     env.user = 'rayco'
     env.python_version = '2.7'
