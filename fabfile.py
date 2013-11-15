@@ -48,8 +48,8 @@ def symlink_current_release():
     sudo('rm -rf %s/%s/media/images' % (env.path, env.project_name))
     sudo('ln -s %s/shared/media/images %s/%s/media/' % (env.path, env.path, env.project_name))
     
-    sudo('rm -rf %s/%s/%s/settings.py' % (env.path, env.project_name, env.project_name))
-    sudo('ln -s %s/shared/settings.py %s/%s/%s/' % (env.path, env.path, env.project_name, env.project_name))
+    sudo('rm -rf %s/%s/%s/settings_local.py' % (env.path, env.project_name, env.project_name))
+    sudo('ln -s %s/shared/settings_local.py %s/%s/%s/' % (env.path, env.path, env.project_name, env.project_name))
 
 def deploy():
     download()

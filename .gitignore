@@ -2,4 +2,4 @@
 *.orig
 *.py[cod]
 *.swp
-patrimonioULL/settings.py
+patrimonioULL/settings_local.py

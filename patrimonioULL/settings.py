@@ -23,12 +23,6 @@ DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
-ADMINS = (
-    ('RAYCO ABAD-MARTIN', 'rayco.abad@gmail.com'),
-)
-
-MANAGERS = ADMINS
-
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
@@ -96,5 +90,10 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = BASE_DIR + '/media/'
 MEDIA_URL = '/media/'
 
-MAX_THUMB_SIZE = 200
+MAX_THUMB_SIZE = 100
 MAX_IMAGEN_SIZE = 400
+
+try:
+    from settings_local import *
+except ImportError:
+    pass
