@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'debug_toolbar',
     'patrimonio',
+    'south',
 )
 
 DEBUG_TOOLBAR_CONFIG = {
