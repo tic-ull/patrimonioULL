@@ -12,6 +12,7 @@ class DisciplinaArtistica(models.Model):
     def __unicode__(self):
         return u'%s' % (self.disciplina)
 
+
 class ObraDeArte(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)
     n_de_registro = models.CharField(u"Nº de Registro",
