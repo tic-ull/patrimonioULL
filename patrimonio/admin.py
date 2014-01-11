@@ -40,11 +40,8 @@ class ObraAdmin(admin.ModelAdmin):
         (None, {
             'classes': ('wide', 'extrapretty', ),
             'fields': (('registro', 'imagen'), ('titulo', 'autor'),
-                       ('fecha', 'medidas'), ('tematica', 'tecnica'))
-        }),
-        (u'Disciplinas Artísticas', {
-            'fields': (('dibujo', 'pintura', 'escultura', 'fotografia'),
-                       ('grabado', 'ceramica', 'litografia', 'otros'))
+                       ('fecha', 'medidas'), ('tematica', 'tecnica'),
+                       ('disciplina'))
         }),
         (u'Estado', {
             'classes': ('wide', 'extrapretty', ),

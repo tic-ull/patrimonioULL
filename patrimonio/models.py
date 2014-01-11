@@ -15,14 +15,6 @@ class ObraDeArte(models.Model):
     autor = models.CharField(max_length=50, blank=True)
     disciplina = models.ForeignKey('DisciplinaArtistica',
                                    on_delete=models.PROTECT)
-    dibujo = models.NullBooleanField(default=False)
-    pintura = models.NullBooleanField(default=False)
-    escultura = models.NullBooleanField(default=False)
-    fotografia = models.NullBooleanField(default=False)
-    grabado = models.NullBooleanField(default=False)
-    ceramica = models.NullBooleanField(default=False)
-    litografia = models.NullBooleanField(default=False)
-    otros = models.NullBooleanField(default=False)
     imagen = models.ImageField(upload_to='images', blank=True)
     medidas = models.CharField(max_length=100, blank=True)
     tematica = models.CharField(u"Temática y Estilo",
