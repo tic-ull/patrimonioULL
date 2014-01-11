@@ -5,3 +5,4 @@ psycopg2
 south
 ipython
 #-e git+git@git.ccti.ull.es:django_cas#egg=django_cas
+Pillow
