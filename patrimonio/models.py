@@ -13,9 +13,8 @@ class ObraDeArte(models.Model):
                                 primary_key=True)
     titulo = models.CharField(u"Título", max_length=255, blank=True)
     autor = models.CharField(max_length=50, blank=True)
-#    disciplina = models.ForeignKey('DisciplinaArtistica',
-#                                   name='DISCIPLINA ARTÍSTICA',
-#                                   on_delete=models.PROTECT)
+    disciplina = models.ForeignKey('DisciplinaArtistica',
+                                   on_delete=models.PROTECT)
     dibujo = models.NullBooleanField(default=False)
     pintura = models.NullBooleanField(default=False)
     escultura = models.NullBooleanField(default=False)
