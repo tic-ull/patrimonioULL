@@ -35,6 +35,7 @@ class FichaDeInventarioAdmin(admin.ModelAdmin):
     list_per_page = 20
     ordering = ('id',)
     list_display = ('n_de_registro', 'titulo', 'imagen_thumb')
+    search_fields = ('n_de_registro', 'titulo', 'autor', 'fecha')
     fieldsets = (
         (None, {
             'classes': ('wide', 'extrapretty', ),
