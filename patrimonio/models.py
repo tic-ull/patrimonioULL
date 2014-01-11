@@ -5,18 +5,15 @@ from django.conf import settings as st
 
 
 class DisciplinaArtistica(models.Model):
-    id = models.AutoField(db_column='Id', primary_key=True)
-    disciplina = models.CharField(max_length=50, blank=True)
+    disciplina = models.CharField(max_length=50, primary_key=True)
 
     def __unicode__(self):
         return u'%s' % (self.disciplina)
 
 
 class ObraDeArte(models.Model):
-    id = models.AutoField(db_column='Id', primary_key=True)
-    n_de_registro = models.CharField(u"Nº de Registro",
-                                     max_length=50,
-                                     blank=True)
+    n_de_registro = models.CharField(u"Nº de Registro", max_length=50,
+                                     primary_key=True)
     titulo = models.CharField(u"Título", max_length=255, blank=True)
     autor = models.CharField(max_length=50, blank=True)
 #    disciplina = models.ForeignKey('DisciplinaArtistica',

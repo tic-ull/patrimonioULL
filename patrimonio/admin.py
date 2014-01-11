@@ -27,13 +27,13 @@ class AdminImageWidget(admin.widgets.AdminFileWidget):
 
 
 class DisciplinaAdmin(admin.ModelAdmin):
-    ordering = ('id',)
+    ordering = ('disciplina',)
     list_display = ('disciplina',)
 
 
 class ObraAdmin(admin.ModelAdmin):
     list_per_page = 20
-    ordering = ('id',)
+    ordering = ('n_de_registro',)
     list_display = ('n_de_registro', 'titulo', 'imagen_thumb')
     fieldsets = (
         (None, {
