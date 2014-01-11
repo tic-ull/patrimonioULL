@@ -34,8 +34,8 @@ class ObraDeArte(models.Model):
     tecnica = models.CharField(u"Técnica", max_length=50, blank=True)
     fecha = models.CharField(max_length=100, blank=True)
     ubicacion = models.TextField(u"Ubicación", blank=True)
-    estado_de_conservacion = models.CharField(u"Estado de Conservación",
-                                              max_length=50, blank=True)
+    estado = models.CharField(u"Estado de Conservación",
+                              max_length=50, blank=True)
     desperfectos = models.TextField(blank=True)
     contacto = models.TextField(blank=True)
     observaciones = models.TextField(blank=True)
