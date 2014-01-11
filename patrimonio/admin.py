@@ -3,8 +3,8 @@
 from django.conf import settings as st
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from patrimonio.models import (AuxiliarDisciplinasArtisticas,
-                               TablaDeFichasDelInventario)
+from patrimonio.models import (DisciplinaArtistica,
+                               ObraDeArte)
 
 
 class AdminImageWidget(admin.widgets.AdminFileWidget):
@@ -31,7 +31,7 @@ class DisciplinaAdmin(admin.ModelAdmin):
     list_display = ('disciplina',)
 
 
-class FichaDeInventarioAdmin(admin.ModelAdmin):
+class ObraAdmin(admin.ModelAdmin):
     list_per_page = 20
     ordering = ('id',)
     list_display = ('n_de_registro', 'titulo', 'imagen_thumb')
@@ -63,5 +63,5 @@ class FichaDeInventarioAdmin(admin.ModelAdmin):
         return super(FichaDeInventarioAdmin,
                      self).formfield_for_dbfield(db_field, **kwargs)
 
-admin.site.register(AuxiliarDisciplinasArtisticas, DisciplinaAdmin)
-admin.site.register(TablaDeFichasDelInventario, FichaDeInventarioAdmin)
+admin.site.register(DisciplinaArtistica, DisciplinaAdmin)
+admin.site.register(ObraDeArte, ObraAdmin)

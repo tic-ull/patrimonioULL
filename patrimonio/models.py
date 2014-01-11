@@ -4,7 +4,7 @@ from django.db import models
 from django.conf import settings as st
 
 
-class AuxiliarDisciplinasArtisticas(models.Model):
+class DisciplinaArtistica(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)
     disciplina = models.CharField(db_column='DISCIPLINAS ARTISTICAS',
                                   max_length=50, blank=True)
@@ -12,12 +12,7 @@ class AuxiliarDisciplinasArtisticas(models.Model):
     def __unicode__(self):
         return u'%s' % (self.disciplina)
 
-    class Meta:
-        managed = False
-        db_table = 'AUXILIAR DISCIPLINAS ARTISTICAS'
-
-
-class TablaDeFichasDelInventario(models.Model):
+class ObraDeArte(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)
     n_de_registro = models.CharField(u"Nº de Registro",
                                      db_column='N DE REGISTRO', max_length=50,
@@ -25,6 +20,9 @@ class TablaDeFichasDelInventario(models.Model):
     titulo = models.CharField(u"Título", db_column='TITULO', max_length=255,
                               blank=True)
     autor = models.CharField(db_column='AUTOR', max_length=50, blank=True)
+#    disciplina = models.ForeignKey('DisciplinaArtistica',
+#                                   name='DISCIPLINA ARTÍSTICA',
+#                                   on_delete=models.PROTECT)
     dibujo = models.NullBooleanField(db_column='DIBUJO', default=False)
     pintura = models.NullBooleanField(db_column='PINTURA', default=False)
     escultura = models.NullBooleanField(db_column='ESCULTURA', default=False)
@@ -68,7 +66,3 @@ class TablaDeFichasDelInventario(models.Model):
         return u''
     imagen_thumb.allow_tags = True
     imagen_thumb.short_description = u'Imagen'
-
-    class Meta:
-        managed = False
-        db_table = 'TABLA DE FICHAS DEL INVENTARIO'
