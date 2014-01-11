@@ -48,7 +48,7 @@ class ObraAdmin(admin.ModelAdmin):
         }),
         (u'Estado', {
             'classes': ('wide', 'extrapretty', ),
-            'fields': ('estado_de_conservacion', 'desperfectos')
+            'fields': ('estado', 'desperfectos')
         }),
         (None, {
             'classes': ('wide', 'extrapretty', ),
