@@ -7,6 +7,9 @@ from django.conf import settings as st
 class DisciplinaArtistica(models.Model):
     disciplina = models.CharField(max_length=50, primary_key=True)
 
+    def __unicode__(self):
+        return u'%s' % (self.disciplina)
+
 
 class ObraDeArte(models.Model):
     registro = models.CharField(u"Nº de Registro", max_length=50,
@@ -36,6 +39,9 @@ class ObraDeArte(models.Model):
     desperfectos = models.TextField(blank=True)
     contacto = models.TextField(blank=True)
     observaciones = models.TextField(blank=True)
+
+    def __unicode__(self):
+        return u'%s' % (self.registro)
 
     def imagen_thumb(self):
         if self.imagen:
