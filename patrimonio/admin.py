@@ -61,7 +61,7 @@ class ObraAdmin(admin.ModelAdmin):
             kwargs.pop("request", None)
             kwargs['widget'] = AdminImageWidget
             return db_field.formfield(**kwargs)
-        return super(FichaDeInventarioAdmin,
+        return super(ObraAdmin,
                      self).formfield_for_dbfield(db_field, **kwargs)
 
 admin.site.register(DisciplinaArtistica, DisciplinaAdmin)
