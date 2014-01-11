@@ -33,14 +33,14 @@ class DisciplinaAdmin(admin.ModelAdmin):
 
 class ObraAdmin(admin.ModelAdmin):
     list_per_page = 20
-    ordering = ('n_de_registro',)
-    list_display = ('n_de_registro', 'titulo', 'imagen_thumb')
-    search_fields = ('n_de_registro', 'titulo', 'autor', 'fecha')
+    ordering = ('registro',)
+    list_display = ('registro', 'titulo', 'imagen_thumb')
+    search_fields = ('registro', 'titulo', 'autor', 'fecha')
     fieldsets = (
         (None, {
             'classes': ('wide', 'extrapretty', ),
-            'fields': (('n_de_registro', 'imagen'), ('titulo', 'autor'),
-                       ('fecha', 'medidas'), ('tematica_y_estilo', 'tecnica'))
+            'fields': (('registro', 'imagen'), ('titulo', 'autor'),
+                       ('fecha', 'medidas'), ('tematica', 'tecnica'))
         }),
         (u'Disciplinas Artísticas', {
             'fields': (('dibujo', 'pintura', 'escultura', 'fotografia'),
