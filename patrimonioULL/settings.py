@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'patrimonio',
     'south',
+    'logentry_admin',
 )
 
 DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False, }
