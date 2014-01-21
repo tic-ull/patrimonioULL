@@ -10,6 +10,23 @@ class DisciplinaArtistica(models.Model):
     def __unicode__(self):
         return u'%s' % (self.disciplina)
 
+    class Meta:
+        ordering = ['disciplina', ]
+        verbose_name_plural = "Disciplinas Artísticas"
+
+
+class LocalizacionObra(models.Model):
+    codigo = models.CharField(u"Código de Registro", max_length=10,
+                              primary_key=True)
+    localizacion = models.CharField(u"Localización", max_length=255)
+
+    def __unicode__(self):
+        return u'%s' % (self.localizacion)
+
+    class Meta:
+        ordering = ['localizacion', ]
+        verbose_name_plural = "Localizaciones"
+
 
 class ObraDeArte(models.Model):
     registro = models.CharField(u"Nº de Registro", max_length=50,
@@ -24,8 +41,15 @@ class ObraDeArte(models.Model):
                                 max_length=50, blank=True)
     tecnica = models.CharField(u"Técnica", max_length=50, blank=True)
     fecha = models.CharField(max_length=100, blank=True)
+    localizacion = models.ForeignKey('LocalizacionObra',
+                                     on_delete=models.PROTECT)
     ubicacion = models.TextField(u"Ubicación", blank=True)
-    estado = models.CharField(u"Estado de Conservación",
+    TIPOS_ESTADO = (
+        ('Bueno', 'Bueno'),
+        ('Malo', 'Malo'),
+        ('Regular', 'Regular'),
+    )
+    estado = models.CharField(u"Estado de Conservación", choices=TIPOS_ESTADO,
                               max_length=50, blank=True)
     desperfectos = models.TextField(blank=True)
     contacto = models.TextField(blank=True)
@@ -48,3 +72,6 @@ class ObraDeArte(models.Model):
         return u''
     imagen_thumb.allow_tags = True
     imagen_thumb.short_description = u'Imagen'
+
+    class Meta:
+        verbose_name_plural = "Obras de Arte"
