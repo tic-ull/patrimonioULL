@@ -59,8 +59,8 @@ def symlink_current_release():
     sudo('ln -s %s/releases/%s %s/%s' %
          (env.path, env.release, env.path, env.project_name))
 
-    sudo('rm -rf %s/%s/media/images' % (env.path, env.project_name))
-    sudo('ln -s %s/shared/media/images %s/%s/media/' %
+    sudo('rm -rf %s/%s/media/patrimonio' % (env.path, env.project_name))
+    sudo('ln -s %s/shared/media/patrimonio %s/%s/media/' %
          (env.path, env.path, env.project_name))
 
     sudo('rm -rf %s/%s/%s/settings_local.py' %
