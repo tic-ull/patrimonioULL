@@ -7,3 +7,4 @@ ipython
 #-e git+git@git.ccti.ull.es:django_cas#egg=django_cas
 Pillow
 django-logentry-admin
+django-tinymce
