@@ -30,14 +30,11 @@ class DisciplinaFilter(admin.SimpleListFilter):
     parameter_name = 'disciplina'
 
     def lookups(self, request, model_admin):
-        disciplinas = model_admin.queryset(request).values_list(
-            'disciplina', flat=True
-        ).distinct().order_by('disciplina')
-        return [(disciplina, disciplina) for disciplina in disciplinas]
+        return DisciplinaArtistica.objects.values_list('pk', 'disciplina')
 
     def queryset(self, request, queryset):
         if self.value():
-            return queryset.filter(disciplina__pk__exact=self.value())
+            return queryset.filter(disciplina=self.value())
         else:
             return queryset
 
@@ -47,15 +44,11 @@ class LocalizacionFilter(admin.SimpleListFilter):
     parameter_name = 'localizacion'
 
     def lookups(self, request, model_admin):
-        localizaciones = model_admin.queryset(request).values_list(
-            'localizacion', flat=True
-        ).distinct().order_by('localizacion')
-        return [(loc, LocalizacionObra.objects.filter(
-            codigo__iexact=loc)[0]) for loc in localizaciones]
+        return LocalizacionObra.objects.values_list('pk', 'localizacion')
 
     def queryset(self, request, queryset):
         if self.value():
-            return queryset.filter(localizacion__pk__exact=self.value())
+            return queryset.filter(localizacion=self.value())
         else:
             return queryset
 
