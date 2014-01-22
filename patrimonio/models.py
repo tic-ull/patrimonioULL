@@ -7,7 +7,7 @@ import os
 
 
 class DisciplinaArtistica(models.Model):
-    disciplina = models.CharField(max_length=50, primary_key=True)
+    disciplina = models.CharField(max_length=50, unique=True)
 
     def __unicode__(self):
         return u'%s' % (self.disciplina)
@@ -19,7 +19,7 @@ class DisciplinaArtistica(models.Model):
 
 class LocalizacionObra(models.Model):
     codigo = models.CharField(u"Código de Registro", max_length=10,
-                              primary_key=True)
+                              unique=True)
     localizacion = models.CharField(u"Localización", max_length=255)
 
     def __unicode__(self):
@@ -52,7 +52,7 @@ def name_back(instance, filename):
 
 class ObraDeArte(models.Model):
     registro = models.CharField(u"Nº Registro", max_length=50,
-                                primary_key=True)
+                                unique=True)
     titulo = models.CharField(u"Título", max_length=255, blank=True)
     autor = models.CharField(max_length=50, blank=True)
     disciplina = models.ForeignKey('DisciplinaArtistica',
