@@ -29,18 +29,19 @@ class LocalizacionObra(models.Model):
 
 
 class ObraDeArte(models.Model):
-    registro = models.CharField(u"Nº de Registro", max_length=50,
+    registro = models.CharField(u"Nº Registro", max_length=50,
                                 primary_key=True)
     titulo = models.CharField(u"Título", max_length=255, blank=True)
     autor = models.CharField(max_length=50, blank=True)
     disciplina = models.ForeignKey('DisciplinaArtistica',
                                    on_delete=models.PROTECT)
     imagen = models.ImageField(upload_to='images', blank=True)
+    imagen_trasera = models.ImageField(upload_to='images', blank=True)
     medidas = models.CharField(max_length=100, blank=True)
-    tematica = models.CharField(u"Temática y Estilo",
-                                max_length=50, blank=True)
+    tematica = models.CharField(u"Temática y Estilo", max_length=50,
+                                blank=True)
     tecnica = models.CharField(u"Técnica", max_length=50, blank=True)
-    fecha = models.CharField(max_length=100, blank=True)
+    fecha = models.CharField(u"Fecha de Ejecución", max_length=100, blank=True)
     localizacion = models.ForeignKey('LocalizacionObra',
                                      on_delete=models.PROTECT)
     ubicacion = models.TextField(u"Ubicación", blank=True)
@@ -49,8 +50,7 @@ class ObraDeArte(models.Model):
         ('Malo', 'Malo'),
         ('Regular', 'Regular'),
     )
-    estado = models.CharField(u"Estado de Conservación", choices=TIPOS_ESTADO,
-                              max_length=50, blank=True)
+    estado = models.CharField(choices=TIPOS_ESTADO, max_length=50, blank=True)
     desperfectos = models.TextField(blank=True)
     contacto = models.TextField(blank=True)
     observaciones = models.TextField(blank=True)

@@ -79,12 +79,15 @@ class ObraAdmin(admin.ModelAdmin):
     list_filter = (DisciplinaFilter, LocalizacionFilter,)
     fieldsets = (
         (None, {
-            'classes': ('wide', 'extrapretty', ),
-            'fields': (('registro', 'imagen'), ('titulo', 'autor'),
-                       ('fecha', 'medidas'), ('tematica', 'tecnica'),
-                       ('disciplina'))
+            'classes': ('extrapretty', ),
+            'fields': ('registro', ('imagen', 'imagen_trasera'))
         }),
-        (u'Estado', {
+        (None, {
+            'classes': ('wide', 'extrapretty', ),
+            'fields': (('titulo', 'autor'), ('fecha', 'medidas'),
+                       ('tematica', 'tecnica'), ('disciplina'))
+        }),
+        (u'Estado de Conservación', {
             'classes': ('wide', 'extrapretty', ),
             'fields': ('estado', 'desperfectos')
         }),
@@ -96,7 +99,7 @@ class ObraAdmin(admin.ModelAdmin):
     )
 
     def formfield_for_dbfield(self, db_field, **kwargs):
-        if db_field.name == 'imagen':
+        if db_field.name in ('imagen', 'imagen_trasera'):
             kwargs.pop("request", None)
             kwargs['widget'] = AdminImageWidget
             return db_field.formfield(**kwargs)
