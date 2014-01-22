@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
 
-from django.db import models
 from django.conf import settings as st
+from django.db import models
+from tinymce import models as tinymce_models
 
 
 class DisciplinaArtistica(models.Model):
@@ -44,16 +45,11 @@ class ObraDeArte(models.Model):
     fecha = models.CharField(u"Fecha de Ejecución", max_length=100, blank=True)
     localizacion = models.ForeignKey('LocalizacionObra',
                                      on_delete=models.PROTECT)
-    ubicacion = models.TextField(u"Ubicación", blank=True)
-    TIPOS_ESTADO = (
-        ('Bueno', 'Bueno'),
-        ('Malo', 'Malo'),
-        ('Regular', 'Regular'),
-    )
-    estado = models.CharField(choices=TIPOS_ESTADO, max_length=50, blank=True)
-    desperfectos = models.TextField(blank=True)
-    contacto = models.TextField(blank=True)
-    observaciones = models.TextField(blank=True)
+    ubicacion = tinymce_models.HTMLField(u"Ubicación", blank=True)
+    estado = models.CharField(choices=st.TIPOS_ESTADO, max_length=50, blank=True)
+    desperfectos = tinymce_models.HTMLField(blank=True)
+    contacto = tinymce_models.HTMLField(blank=True)
+    observaciones = tinymce_models.HTMLField(blank=True)
 
     def __unicode__(self):
         return u'%s' % (self.registro)

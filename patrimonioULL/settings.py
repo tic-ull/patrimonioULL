@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'patrimonio',
     'south',
     'logentry_admin',
+    'tinymce',
 )
 
 DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False, }
@@ -92,6 +93,13 @@ MEDIA_URL = '/media/'
 
 MAX_THUMB_SIZE = 100
 MAX_IMAGEN_SIZE = 400
+
+# FIXME: Migrate to patrimonio.settings
+TIPOS_ESTADO = (
+    ('Bueno', 'Bueno'),
+    ('Malo', 'Malo'),
+    ('Regular', 'Regular'),
+)
 
 try:
     from settings_local import *
