@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.conf import settings as st
+import os
 
 
 class DisciplinaArtistica(models.Model):
@@ -28,6 +29,26 @@ class LocalizacionObra(models.Model):
         verbose_name_plural = "Localizaciones"
 
 
+def content_file_name(instance, filename, side):
+    extension = os.path.splitext(filename)[1]
+    path = 'patrimonio/images/%s/%s_%s%s' % (instance.disciplina_id,
+                                             instance.pk,
+                                             side, extension)
+    # Deleting the previous file, it doesn't rename with _number
+    fullpath = os.path.join(st.MEDIA_ROOT, path)
+    if os.path.exists(fullpath):
+        os.remove(fullpath)
+    return path
+
+
+def name_front(instance, filename):
+    return content_file_name(instance, filename, 'front')
+
+
+def name_back(instance, filename):
+    return content_file_name(instance, filename, 'back')
+
+
 class ObraDeArte(models.Model):
     registro = models.CharField(u"Nº Registro", max_length=50,
                                 primary_key=True)
@@ -35,8 +56,8 @@ class ObraDeArte(models.Model):
     autor = models.CharField(max_length=50, blank=True)
     disciplina = models.ForeignKey('DisciplinaArtistica',
                                    on_delete=models.PROTECT)
-    imagen = models.ImageField(upload_to='images', blank=True)
-    imagen_trasera = models.ImageField(upload_to='images', blank=True)
+    imagen = models.ImageField(upload_to=name_front, blank=True)
+    imagen_trasera = models.ImageField(upload_to=name_back, blank=True)
     medidas = models.CharField(max_length=100, blank=True)
     tematica = models.CharField(u"Temática y Estilo", max_length=50,
                                 blank=True)
