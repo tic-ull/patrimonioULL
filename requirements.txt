@@ -7,4 +7,3 @@ ipython
 Pillow
 django-logentry-admin
 django-tinymce
-ElementTree
