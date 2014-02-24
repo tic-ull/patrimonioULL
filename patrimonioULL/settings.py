@@ -1,3 +1,4 @@
+# -*- encoding: UTF-8 -*-
 """
 Django settings for patrimonioULL project.
 
@@ -22,6 +23,12 @@ SECRET_KEY = 'y6m(pfx#t*s+=6zb_3!0n&m)gios^8d)kv0@90x2)h7r1-hhr1'
 DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
+
+ADMINS = (
+    ('Rayco Abad-Martín', 'rabadmar@ull.edu.es'),
+)
+
+MANAGERS = ADMINS
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
