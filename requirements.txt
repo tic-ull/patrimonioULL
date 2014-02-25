@@ -8,3 +8,4 @@ Pillow
 django-logentry-admin
 django-tinymce
 Werkzeug
+gunicorn
