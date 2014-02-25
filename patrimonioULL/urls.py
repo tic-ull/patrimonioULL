@@ -12,6 +12,9 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^tinymce/', include('tinymce.urls')),
-    url(r'^accounts/login/$', 'django_cas.views.login'),
-    url(r'^accounts/logout/$', 'django_cas.views.logout'),
-) + static(st.MEDIA_URL, document_root=st.MEDIA_ROOT)
+    url(r'^accounts/login/$', 'django_cas.views.login', name='login'),
+    url(r'^accounts/logout/$', 'django_cas.views.logout', name='logout'),
+)
+
+if st.DEBUG:
+    urlpatterns += static(st.MEDIA_URL, document_root=st.MEDIA_ROOT)
