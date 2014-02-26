@@ -10,10 +10,14 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'patrimonioULL.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^tinymce/', include('tinymce.urls')),
-    url(r'^accounts/login/$', 'django_cas.views.login', name='login'),
-    url(r'^accounts/logout/$', 'django_cas.views.logout', name='logout'),
+    url(r'^patrimonioarte/admin/', include(admin.site.urls)),
+    url(r'^patrimonioarte/tinymce/', include('tinymce.urls')),
+    url(r'^patrimonioarte/accounts/login/$',
+        'django_cas.views.login',
+        name='login'),
+    url(r'^patrimonioarte/accounts/logout/$',
+        'django_cas.views.logout',
+        name='logout'),
 )
 
 if st.DEBUG:
