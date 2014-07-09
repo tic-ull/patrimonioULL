@@ -3,3 +3,5 @@
 *.py[cod]
 *.swp
 patrimonioULL/settings_local.py
+patrimonioULL/.ropeproject/
+.idea/
