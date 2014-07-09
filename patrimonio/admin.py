@@ -99,6 +99,6 @@ class ObraAdmin(admin.ModelAdmin):
         return super(ObraAdmin,
                      self).formfield_for_dbfield(db_field, **kwargs)
 
-admin.site.register(DisciplinaArtistica, DisciplinaAdmin)
-admin.site.register(LocalizacionObra, LocalizacionAdmin)
+# admin.site.register(DisciplinaArtistica, DisciplinaAdmin)
+# admin.site.register(LocalizacionObra, LocalizacionAdmin)
 admin.site.register(ObraDeArte, ObraAdmin)
