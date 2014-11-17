@@ -1,39 +1,46 @@
 # -*- encoding: UTF-8 -*-
-"""
-Django settings for patrimonioULL project.
 
-For more information on this file, see
-https://docs.djangoproject.com/en/1.6/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.6/ref/settings/
-"""
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
+# ******************************* PATHS *************************************
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# ******************************* PATHS *************************************
+
+# ******************************* URLS **************************************
+STATIC_URL = '/patrimonioarte/static/'
+MEDIA_URL = '/patrimonioarte/media/'
+# ******************************* URLS **************************************
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'y6m(pfx#t*s+=6zb_3!0n&m)gios^8d)kv0@90x2)h7r1-hhr1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 TEMPLATE_DEBUG = DEBUG
 
+INTERNAL_IPS = ('127.0.0.1', )
+ALLOWED_HOSTS = ['*']
+
+# ******************************* ADMINS *************************************
 ADMINS = (
     ('Rayco Abad-Martín', 'rabadmar@ull.edu.es'),
 )
-
 MANAGERS = ADMINS
+# ******************************* ADMINS *************************************
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+# ******************************* LANGUAGE ***********************************
+USE_I18N = True
+USE_L10N = True
+LANGUAGE_CODE = 'es'
+TIME_ZONE = 'Atlantic/Canary'
+USE_TZ = True
+# ******************************* LANGUAGE ***********************************
 
-# Application definition
-
+# ******************************* INSTALLED APPS *****************************
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,17 +49,13 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    #'debug_toolbar',
     'patrimonio',
-    'south',
     'logentry_admin',
     'tinymce',
 )
+# ******************************* INSTALLED APPS *****************************
 
-DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False, }
-
-INTERNAL_IPS = ('127.0.0.1',)
-
+# ******************************* MIDDLEWARES ********************************
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -60,55 +63,32 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django_cas.middleware.CASMiddleware',
     'django.middleware.doc.XViewMiddleware',
+    'django_cas.middleware.CASMiddleware',
 )
+# ******************************* MIDDLEWARES ********************************
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
     'django_cas.backends.CASBackend',
 )
 
+# ************************* AUTHENTICATION CAS - ULL *************************
 CAS_SERVER_URL = 'https://loginpruebas.ull.es/cas-1/'
 CAS_VERSION = 'CAS_2_SAML_1_0'
+# ************************* AUTHENTICATION CAS - ULL *************************
 
 ROOT_URLCONF = 'patrimonioULL.urls'
 
 WSGI_APPLICATION = 'patrimonioULL.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
+# ******************************* DATABASES **********************************
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.6/topics/i18n/
-
-LANGUAGE_CODE = 'es'
-
-TIME_ZONE = 'Atlantic/Canary'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.6/howto/static-files/
-
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR + '/static/'
-
-MEDIA_ROOT = BASE_DIR + '/media/'
-MEDIA_URL = '/media/'
+# ******************************* DATABASES **********************************
 
 MAX_THUMB_SIZE = 100
 MAX_IMAGEN_SIZE = 400
@@ -120,7 +100,12 @@ TIPOS_ESTADO = (
     ('Regular', 'Regular'),
 )
 
+# ************************* SETTINGS LOCAL ***********************************
 try:
-    from settings_local import *
-except ImportError:
-    pass
+    SETTINGS_LOCAL
+except NameError:
+    try:
+        from settings_local import *
+    except ImportError:
+        pass
+# ************************* SETTINGS LOCAL ***********************************
