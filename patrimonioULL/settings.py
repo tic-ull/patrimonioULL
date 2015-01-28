@@ -75,6 +75,7 @@ INSTALLED_APPS = (
     'patrimonio',
     'logentry_admin',
     'tinymce',
+    'django_object_actions',
 )
 # ******************************* INSTALLED APPS *****************************
 

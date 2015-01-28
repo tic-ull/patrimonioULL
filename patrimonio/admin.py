@@ -29,6 +29,8 @@ from django.utils.safestring import mark_safe
 from patrimonio.models import (DisciplinaArtistica,
                                LocalizacionObra,
                                ObraDeArte)
+from django_object_actions import DjangoObjectActions
+from patrimonio.obraPDF import ObraPDF
 
 
 class AdminImageWidget(admin.widgets.AdminFileWidget):
@@ -87,7 +89,7 @@ class LocalizacionAdmin(admin.ModelAdmin):
     list_display = ('localizacion', 'codigo')
 
 
-class ObraAdmin(admin.ModelAdmin):
+class ObraAdmin(DjangoObjectActions, admin.ModelAdmin):
     list_per_page = 20
     ordering = ('registro',)
     list_display = ('registro', 'titulo', 'imagen_thumb')
@@ -121,6 +123,13 @@ class ObraAdmin(admin.ModelAdmin):
             return db_field.formfield(**kwargs)
         return super(ObraAdmin,
                      self).formfield_for_dbfield(db_field, **kwargs)
+
+    def print_pdf(self, request, obj):
+        return ObraPDF(obj).go()
+    print_pdf.label = "Imprimir"
+    print_pdf.short_description = "Imprimir en PDF"
+
+    objectactions = ('print_pdf', )
 
 admin.site.register(DisciplinaArtistica, DisciplinaAdmin)
 admin.site.register(LocalizacionObra, LocalizacionAdmin)
