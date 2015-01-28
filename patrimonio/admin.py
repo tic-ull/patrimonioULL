@@ -26,10 +26,9 @@
 from django.conf import settings as st
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from patrimonio.models import (DisciplinaArtistica,
-                               LocalizacionObra,
-                               ObraDeArte)
 from django_object_actions import DjangoObjectActions
+from patrimonio.models import (DisciplinaArtistica, LocalizacionObra,
+                               ObraDeArte)
 from patrimonio.obraPDF import ObraPDF
 
 

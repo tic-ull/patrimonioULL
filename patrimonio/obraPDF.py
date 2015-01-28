@@ -23,14 +23,17 @@
 #    <http://www.gnu.org/licenses/>.
 #
 
+
 from django.conf import settings as st
+from django.http import HttpResponse
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import inch, mm
-from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer, TableStyle)
+from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer,
+                                TableStyle)
+from io import BytesIO
 from slugify import slugify
-from django.http import HttpResponse
 
 
 class ObraPDF:
@@ -56,20 +59,26 @@ class ObraPDF:
             unicode(self.obj.pk) + "-" + self.obj.titulo) + ".pdf"
         response['Content-Disposition'] = (
             'attachment;' 'filename="%s"' % filename)
-        from io import BytesIO
+
         buff = BytesIO()
         doc = SimpleDocTemplate(buff)
         story = [Spacer(1, 3 * self.DEFAULT_SPACER)]
 
+        self.title(story)
         self.general_info(story)
         self.condition(story)
         self.location(story)
         self.observations(story)
+
         doc.build(
             story, onFirstPage=self.first_page, onLaterPages=self.later_pages)
         response.write(buff.getvalue())
         buff.close()
         return response
+
+    def title(self, story):
+        story.append(Paragraph(u'%s' % self.obj.titulo, self.styleH2()))
+        story.append(Spacer(1, 1 * self.DEFAULT_SPACER))
 
     def general_info(self, story):
         story.append(Paragraph(u'INFORMACIÓN GENERAL', self.styleH3()))
@@ -143,14 +152,13 @@ class ObraPDF:
         canvas.setFont(self.DEFAULT_FONT_BOLD, self.HEADER_FONT_SIZE)
         canvas.setFillColor(self.BLUE_ULL)
         canvas.drawString(self.MARGIN, self.PAGE_HEIGHT - 2 * self.MARGIN,
-                          u'FICHA DE INVENTARIO: ' + unicode(self.obj.registro)
-                          + ' - ' + self.obj.titulo)
+                          u'FICHA DE INVENTARIO: ' + unicode(self.obj.registro))
         if self.obj.imagen:
             width = self.obj.imagen._get_width()
             height = self.obj.imagen._get_height()
             max_size = max(width, height)
-            ratio = (max_size > st.MAX_THUMB_SIZE
-                    and float(max_size) / st.MAX_THUMB_SIZE or 1)
+            ratio = (max_size > st.MAX_THUMB_SIZE and
+                     float(max_size) / st.MAX_THUMB_SIZE or 1)
             thumb_width = width / ratio
             thumb_height = height / ratio
             canvas.drawImage(
@@ -174,6 +182,11 @@ class ObraPDF:
     def styleH3(self):
         style = getSampleStyleSheet()['Heading3']
         style.textColor = self.VIOLET_ULL
+        return style
+
+    def styleH2(self):
+        style = getSampleStyleSheet()['Heading2']
+        style.textColor = self.BLUE_ULL
         return style
 
     def styleTable(self):
