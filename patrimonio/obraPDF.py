@@ -23,7 +23,7 @@
 #    <http://www.gnu.org/licenses/>.
 #
 
-
+from .helpers import imagen_max_size
 from django.conf import settings as st
 from django.http import HttpResponse
 from reportlab.lib import colors
@@ -77,11 +77,11 @@ class ObraPDF:
         return response
 
     def title(self, story):
-        story.append(Paragraph(u'%s' % self.obj.titulo, self.styleH2()))
+        story.append(Paragraph(u'%s' % self.obj.titulo, self.style_h2()))
         story.append(Spacer(1, 1 * self.DEFAULT_SPACER))
 
     def general_info(self, story):
-        story.append(Paragraph(u'INFORMACIÓN GENERAL', self.styleH3()))
+        story.append(Paragraph(u'INFORMACIÓN GENERAL', self.style_h3()))
         text = u''
         if self.obj.autor:
             text += u'<b>Autor:</b> %s <br/>' % self.obj.autor
@@ -95,21 +95,21 @@ class ObraPDF:
             text += u'<b>Técnica:</b> %s <br/>' % self.obj.tecnica
         if self.obj.disciplina:
             text += u'<b>Disciplina:</b> %s <br/>' % self.obj.disciplina
-        story.append(Paragraph(text, self.styleN()))
+        story.append(Paragraph(text, self.style_n()))
         story.append(Spacer(1, 1 * self.DEFAULT_SPACER))
 
     def condition(self, story):
-        story.append(Paragraph(u'ESTADO DE CONSERVACIÓN', self.styleH3()))
+        story.append(Paragraph(u'ESTADO DE CONSERVACIÓN', self.style_h3()))
         text = u''
         if self.obj.estado:
             text += u'<b>Estado:</b> %s <br/>' % self.obj.estado
         if self.obj.desperfectos:
             text += u'<b>Desperfectos:</b> %s <br/>' % self.obj.desperfectos
-        story.append(Paragraph(text, self.styleN()))
+        story.append(Paragraph(text, self.style_n()))
         story.append(Spacer(1, 1 * self.DEFAULT_SPACER))
 
     def location(self, story):
-        story.append(Paragraph(u'LOCALIZACIÓN', self.styleH3()))
+        story.append(Paragraph(u'LOCALIZACIÓN', self.style_h3()))
         text = u''
         if self.obj.localizacion:
             text += u'<b>%s</b><br/>' % self.obj.localizacion
@@ -117,14 +117,14 @@ class ObraPDF:
             text += u'<b>Ubicación:</b> %s<br/>' % self.obj.ubicacion
         if self.obj.contacto:
             text += u'<b>Contacto:</b> %s <br/>' % self.obj.contacto
-        story.append(Paragraph(text, self.styleN()))
+        story.append(Paragraph(text, self.style_n()))
         story.append(Spacer(1, 1 * self.DEFAULT_SPACER))
 
     def observations(self, story):
         if self.obj.observaciones:
-            story.append(Paragraph(u'OBSERVACIONES', self.styleH3()))
+            story.append(Paragraph(u'OBSERVACIONES', self.style_h3()))
             text = u'%s<br/>' % self.obj.observaciones
-            story.append(Paragraph(text, self.styleN()))
+            story.append(Paragraph(text, self.style_n()))
             story.append(Spacer(1, 1 * self.DEFAULT_SPACER))
 
     # -------------------------------------------------------------------------
@@ -154,13 +154,8 @@ class ObraPDF:
         canvas.drawString(self.MARGIN, self.PAGE_HEIGHT - 2 * self.MARGIN,
                           u'FICHA DE INVENTARIO: ' + unicode(self.obj.registro))
         if self.obj.imagen:
-            width = self.obj.imagen._get_width()
-            height = self.obj.imagen._get_height()
-            max_size = max(width, height)
-            ratio = (max_size > st.MAX_THUMB_SIZE and
-                     float(max_size) / st.MAX_THUMB_SIZE or 1)
-            thumb_width = width / ratio
-            thumb_height = height / ratio
+            thumb_width, thumb_height = imagen_max_size(
+                self.obj.imagen, st.MAX_THUMB_SIZE)
             canvas.drawImage(
                 self.obj.imagen.path,
                 self.PAGE_WIDTH - self.MARGIN - thumb_width,
@@ -172,24 +167,24 @@ class ObraPDF:
     # ESTILOS DEL PDF
     # --------------------------------------------------------------------
 
-    def styleN(self):
+    def style_n(self):
         style = getSampleStyleSheet()['Normal']
         style.leading = 12
         style.allowWidows = 0
         style.spaceBefore = 0.2 * inch
         return style
 
-    def styleH3(self):
+    def style_h3(self):
         style = getSampleStyleSheet()['Heading3']
         style.textColor = self.VIOLET_ULL
         return style
 
-    def styleH2(self):
+    def style_h2(self):
         style = getSampleStyleSheet()['Heading2']
         style.textColor = self.BLUE_ULL
         return style
 
-    def styleTable(self):
+    def style_table(self):
         style = TableStyle(
             [('SIZE', (0, 0), (-1, -1), 8),
              ('BOX', (0, 0), (-1, -1), 0.2, self.BLUE_ULL),

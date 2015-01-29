@@ -23,24 +23,20 @@
 #    <http://www.gnu.org/licenses/>.
 #
 
+from .helpers import imagen_max_size
+from .models import DisciplinaArtistica, LocalizacionObra, ObraDeArte
+from .obraPDF import ObraPDF
 from django.conf import settings as st
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django_object_actions import DjangoObjectActions
-from patrimonio.models import (DisciplinaArtistica, LocalizacionObra,
-                               ObraDeArte)
-from patrimonio.obraPDF import ObraPDF
 
 
 class AdminImageWidget(admin.widgets.AdminFileWidget):
     def render(self, name, imagen, attrs=None):
         output = []
         if imagen and getattr(imagen, "url", None):
-            max_imagen_size = max(imagen.width, imagen.height)
-            ratio = (max_imagen_size > st.MAX_IMAGEN_SIZE and
-                     float(max_imagen_size) / st.MAX_IMAGEN_SIZE or 1)
-            width = imagen.width / ratio
-            height = imagen.height / ratio
+            width, height = imagen_max_size(imagen, st.MAX_IMAGEN_SIZE)
             output.append(u'<a href="%s" target="_blank"> \
                           <img src="%s" width="%s height="%s"/></a>' %
                           (imagen.url, imagen.url, width, height))
@@ -77,9 +73,6 @@ class LocalizacionFilter(admin.SimpleListFilter):
             return queryset
 
 
-# Register your models here.
-
-
 class DisciplinaAdmin(admin.ModelAdmin):
     list_display = ('disciplina',)
 
@@ -102,7 +95,7 @@ class ObraAdmin(DjangoObjectActions, admin.ModelAdmin):
         (None, {
             'classes': ('wide', 'extrapretty', ),
             'fields': (('titulo', 'autor'), ('fecha', 'medidas'),
-                       ('tematica', 'tecnica'), ('disciplina'))
+                       ('tematica', 'tecnica'), 'disciplina')
         }),
         (u'Estado de Conservación', {
             'classes': ('wide', 'extrapretty', ),

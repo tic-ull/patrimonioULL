@@ -23,18 +23,17 @@
 #    <http://www.gnu.org/licenses/>.
 #
 
+from .helpers import name_front, name_back, imagen_max_size
 from django.conf import settings as st
 from django.db import models
 from tinymce import models as tinymce_models
-
-import os
 
 
 class DisciplinaArtistica(models.Model):
     disciplina = models.CharField(max_length=50, unique=True)
 
     def __unicode__(self):
-        return u'%s' % (self.disciplina)
+        return u'%s' % self.disciplina
 
     class Meta:
         ordering = ['disciplina', ]
@@ -42,36 +41,17 @@ class DisciplinaArtistica(models.Model):
 
 
 class LocalizacionObra(models.Model):
-    codigo = models.CharField(u"Código de Registro", max_length=10,
-                              unique=True)
+    codigo = models.CharField(
+        u"Código de Registro", max_length=10, unique=True)
+
     localizacion = models.CharField(u"Localización", max_length=255)
 
     def __unicode__(self):
-        return u'%s' % (self.localizacion)
+        return u'%s' % self.localizacion
 
     class Meta:
         ordering = ['localizacion', ]
         verbose_name_plural = "Localizaciones"
-
-
-def content_file_name(instance, filename, side):
-    extension = os.path.splitext(filename)[1]
-    path = 'patrimonio/images/%s/%s_%s%s' % (instance.disciplina_id,
-                                             instance.pk,
-                                             side, extension)
-    # Deleting the previous file, it doesn't rename with _number
-    fullpath = os.path.join(st.MEDIA_ROOT, path)
-    if os.path.exists(fullpath):
-        os.remove(fullpath)
-    return path
-
-
-def name_front(instance, filename):
-    return content_file_name(instance, filename, 'front')
-
-
-def name_back(instance, filename):
-    return content_file_name(instance, filename, 'back')
 
 
 class ObraDeArte(models.Model):
@@ -112,16 +92,10 @@ class ObraDeArte(models.Model):
 
     observaciones = tinymce_models.HTMLField(blank=True)
 
-    def __unicode__(self):
-        return u'%s' % (self.registro)
-
     def imagen_thumb(self):
         if self.imagen:
-            max_imagen_size = max(self.imagen.width, self.imagen.height)
-            ratio = (max_imagen_size > st.MAX_THUMB_SIZE and
-                     float(max_imagen_size) / st.MAX_THUMB_SIZE or 1)
-            thumb_width = self.imagen.width / ratio
-            thumb_height = self.imagen.height / ratio
+            thumb_width, thumb_height = imagen_max_size(
+                self.imagen, st.MAX_THUMB_SIZE)
             return (u'<a href="%s%s" target="_blank"> \
                     <img src="%s%s" width="%s" height="%s" /></a>' %
                     (st.MEDIA_URL, self.imagen, st.MEDIA_URL,
@@ -129,6 +103,9 @@ class ObraDeArte(models.Model):
         return u''
     imagen_thumb.allow_tags = True
     imagen_thumb.short_description = u'Imagen'
+
+    def __unicode__(self):
+        return u'%s' % self.registro
 
     class Meta:
         verbose_name_plural = "Obras de Arte"
