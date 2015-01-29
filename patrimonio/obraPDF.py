@@ -151,8 +151,9 @@ class ObraPDF:
     def header(self, canvas):
         canvas.setFont(self.DEFAULT_FONT_BOLD, self.HEADER_FONT_SIZE)
         canvas.setFillColor(self.BLUE_ULL)
-        canvas.drawString(self.MARGIN, self.PAGE_HEIGHT - 2 * self.MARGIN,
-                          u'FICHA DE INVENTARIO: ' + unicode(self.obj.registro))
+        canvas.drawString(
+            self.MARGIN, self.PAGE_HEIGHT - 2 * self.MARGIN,
+            u'FICHA DE INVENTARIO: ' + unicode(self.obj.registro))
         if self.obj.imagen:
             thumb_width, thumb_height = imagen_max_size(
                 self.obj.imagen, st.MAX_THUMB_SIZE)
