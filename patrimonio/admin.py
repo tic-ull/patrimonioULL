@@ -28,8 +28,10 @@ from .models import DisciplinaArtistica, LocalizacionObra, ObraDeArte
 from .obraPDF import ObraPDF
 from django.conf import settings as st
 from django.contrib import admin
+from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 from django_object_actions import DjangoObjectActions
+from slugify import slugify
 
 
 class AdminImageWidget(admin.widgets.AdminFileWidget):
@@ -117,7 +119,13 @@ class ObraAdmin(DjangoObjectActions, admin.ModelAdmin):
                      self).formfield_for_dbfield(db_field, **kwargs)
 
     def print_pdf(self, request, obj):
-        return ObraPDF(obj).go()
+        response = HttpResponse(content_type='application/pdf')
+        filename = slugify(
+            unicode(obj.pk) + "-" + obj.titulo) + ".pdf"
+        response['Content-Disposition'] = (
+            'attachment;' 'filename="%s"' % filename)
+        response.write(ObraPDF(obj).go())
+        return response
     print_pdf.label = "Imprimir"
     print_pdf.short_description = "Imprimir en PDF"
 

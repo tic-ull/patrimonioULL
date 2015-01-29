@@ -25,7 +25,6 @@
 
 from .helpers import imagen_max_size
 from django.conf import settings as st
-from django.http import HttpResponse
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet
@@ -33,7 +32,6 @@ from reportlab.lib.units import inch, mm
 from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer,
                                 TableStyle)
 from io import BytesIO
-from slugify import slugify
 
 
 class ObraPDF:
@@ -54,27 +52,19 @@ class ObraPDF:
         self.obj = obj
 
     def go(self):
-        response = HttpResponse(content_type='application/pdf')
-        filename = slugify(
-            unicode(self.obj.pk) + "-" + self.obj.titulo) + ".pdf"
-        response['Content-Disposition'] = (
-            'attachment;' 'filename="%s"' % filename)
-
         buff = BytesIO()
         doc = SimpleDocTemplate(buff)
         story = [Spacer(1, 3 * self.DEFAULT_SPACER)]
-
         self.title(story)
         self.general_info(story)
         self.condition(story)
         self.location(story)
         self.observations(story)
-
         doc.build(
             story, onFirstPage=self.first_page, onLaterPages=self.later_pages)
-        response.write(buff.getvalue())
+        pdf = buff.getvalue()
         buff.close()
-        return response
+        return pdf
 
     def title(self, story):
         story.append(Paragraph(u'%s' % self.obj.titulo, self.style_h2()))
