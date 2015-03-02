@@ -23,7 +23,7 @@
 #    <http://www.gnu.org/licenses/>.
 #
 
-from fabric.api import env, sudo
+from fabric.api import env, sudo, local
 
 env.project_name = 'patrimonioULL'
 env.repo = 'https://bitbucket.org/rayco/patrimonioull'
@@ -32,20 +32,20 @@ env.branch = 'master'
 
 def development():
     """Development Environment"""
-    env.path = '~/PATRIMONIO-ULL'
+    env.path = '~/PATRIMONIO-ULL-A'
     env.hosts = ['localhost']
     env.user = 'rayco'
     env.python_version = '2.7'
 
 
 def install_dependences_requirements():
-    sudo('apt-get install -y build-essential python-dev git')
+    sudo('apt-get install -y build-essential git python-dev libpq-dev')
+    sudo('apt-get install -y postgresql postgresql-client postgresql-contrib')
 
 
 def create_enviroment():
-    sudo('mkdir -p %s/VIRTUALENV' % env.path)
-    sudo('cd %s/VIRTUALENV && virtualenv --no-site-packages .' % env.path)
-    sudo('cd %s && mkdir shared && mkdir releases' % env.path)
+    local('mkdir -p %s/VIRTUALENV' % env.path)
+    local('cd %s/VIRTUALENV && virtualenv --no-site-packages .' % env.path)
 
 
 def setup():
@@ -58,39 +58,17 @@ def setup():
     create_enviroment()
 
 
-def version():
-    import time
-    env.release = str(env.branch) + '-' + str(time.strftime('%Y%m%d%H%M%S'))
-
-
 def download():
-    version()
-    sudo('git clone -b %s %s %s/releases/%s' %
-         (env.branch, env.repo, env.path, env.release))
+    local('git clone -b %s %s %s/%s' % (
+        env.branch, env.repo, env.path, env.project_name))
 
 
 def install_requirements():
-    sudo('source %s/VIRTUALENV/bin/activate && \
-          pip install -r %s/releases/%s/requirements.txt' %
-         (env.path, env.path, env.release))
-
-
-def symlink_current_release():
-    sudo('rm -rf %s/%s' % (env.path, env.project_name))
-    sudo('ln -s %s/releases/%s %s/%s' %
-         (env.path, env.release, env.path, env.project_name))
-
-    sudo('rm -rf %s/%s/media/patrimonio' % (env.path, env.project_name))
-    sudo('ln -s %s/shared/media/patrimonio %s/%s/media/' %
-         (env.path, env.path, env.project_name))
-
-    sudo('rm -rf %s/%s/%s/settings_local.py' %
-         (env.path, env.project_name, env.project_name))
-    sudo('ln -s %s/shared/settings_local.py %s/%s/%s/' %
-         (env.path, env.path, env.project_name, env.project_name))
+    local('. %s/VIRTUALENV/bin/activate &&'
+          'pip install -r %s/%s/requirements.txt -U' % (
+              env.path, env.path, env.project_name))
 
 
 def deploy():
     download()
     install_requirements()
-    symlink_current_release()
