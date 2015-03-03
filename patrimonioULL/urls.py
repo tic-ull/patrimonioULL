@@ -23,23 +23,21 @@
 #    <http://www.gnu.org/licenses/>.
 #
 
+from django.conf import settings as st
 from django.conf.urls import patterns, include, url
-
+from django.conf.urls.static import static
 from django.contrib import admin
+
 admin.autodiscover()
 
-from django.conf import settings as st
-from django.conf.urls.static import static
-
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^patrimonioarte/admin/', include(admin.site.urls)),
     url(r'^patrimonioarte/tinymce/', include('tinymce.urls')),
     url(r'^patrimonioarte/accounts/login/$',
-        'django_cas.views.login',
-        name='login'),
+        'django_cas.views.login', name='login'),
     url(r'^patrimonioarte/accounts/logout/$',
-        'django_cas.views.logout',
-        name='logout'),
+        'django_cas.views.logout', name='logout'),
 )
 
 if st.DEBUG:

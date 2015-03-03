@@ -108,9 +108,13 @@ WSGI_APPLICATION = 'patrimonioULL.wsgi.application'
 # ******************************* DATABASES **********************************
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'name',
+        'USER': 'user',
+        'PASSWORD': 'password',
+        'HOST': '',
+        'PORT': '',
+    },
 }
 # ******************************* DATABASES **********************************
 
@@ -191,6 +195,20 @@ LOGGING = {
     }
 }
 # ******************************* LOGGING ************************************
+
+# ******************************* TEMPLATES **********************************
+TEMPLATE_LOADER = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+)
+# ******************************* TEMPLATES **********************************
+
+# ************************* STATIC FILES *************************************
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+# ************************* STATIC FILES *************************************
 
 # ************************* EMAIL ********************************************
 import socket
