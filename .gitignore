@@ -4,5 +4,7 @@
 *.swp
 *.log
 patrimonioULL/settings_local.py
-patrimonioULL/.ropeproject/
+.ropeproject/
 .idea/
+collected_static
+virtualenv
