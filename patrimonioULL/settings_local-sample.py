@@ -26,7 +26,7 @@
 SETTINGS_LOCAL = True
 from .settings import *
 
-DATABASES['default']['NAME'] = 'name',
-DATABASES['default']['USER'] = 'user',
-DATABASES['default']['PASSWORD'] = 'password',
-DATABASES['default']['HOST'] = 'localhost',
+DATABASES['default']['NAME'] = 'name'
+DATABASES['default']['USER'] = 'user'
+DATABASES['default']['PASSWORD'] = 'password'
+DATABASES['default']['HOST'] = 'localhost'
