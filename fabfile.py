@@ -32,7 +32,7 @@ env.branch = 'master'
 
 def development():
     """Development Environment"""
-    env.path = '~/PATRIMONIO-ULL-A'
+    env.path = '~/PATRIMONIO-ULL'
     env.hosts = ['localhost']
     env.user = 'rayco'
     env.python_version = '2.7'
@@ -64,9 +64,13 @@ def download():
 
 
 def install_requirements():
-    local('. %s/VIRTUALENV/bin/activate &&'
-          'pip install -r %s/%s/requirements.txt -U' % (
-              env.path, env.path, env.project_name))
+    local('. %s/VIRTUALENV/bin/activate && '
+          'pip install -r requirements.txt -U' % env.path)
+
+
+def collectstatic():
+    local('. %s/VIRTUALENV/bin/activate && '
+          'python manage.py collectstatic --noinput' % env.path)
 
 
 def deploy():
