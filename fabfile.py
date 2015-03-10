@@ -76,3 +76,4 @@ def collectstatic():
 def deploy():
     download()
     install_requirements()
+    collectstatic()

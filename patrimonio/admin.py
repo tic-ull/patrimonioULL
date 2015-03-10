@@ -24,7 +24,8 @@
 #
 
 from .helpers import imagen_max_size
-from .models import DisciplinaArtistica, LocalizacionObra, ObraDeArte
+from .models import (DisciplinaArtistica, LocalizacionObra, ObraDeArte,
+                     Image, Fotografia)
 from .obraPDF import ObraPDF
 from django.conf import settings as st
 from django.contrib import admin
@@ -131,6 +132,51 @@ class ObraAdmin(DjangoObjectActions, admin.ModelAdmin):
 
     objectactions = ('print_pdf', )
 
+
+class ImageInline(admin.StackedInline):
+    model = Image
+    extra = 0
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        if db_field.name is 'imagen':
+            kwargs.pop("request", None)
+            kwargs['widget'] = AdminImageWidget
+            return db_field.formfield(**kwargs)
+        return super(ImageInline,
+                     self).formfield_for_dbfield(db_field, **kwargs)
+
+
+class FotografiaAdmin(admin.ModelAdmin):
+    list_per_page = 20
+    ordering = ('registro',)
+    list_display = ('registro', 'titulo',)
+    search_fields = ('registro', 'titulo', 'autor', 'fecha',)
+
+    inlines = [
+        ImageInline,
+    ]
+
+    fieldsets = (
+        (None, {
+            'classes': ('extrapretty', ),
+            'fields': ('registro',)
+        }),
+        (None, {
+            'classes': ('wide', 'extrapretty', ),
+            'fields': (('titulo', 'autor'), ('fecha', 'medidas'),
+                       ('tematica', 'tecnica'))
+        }),
+        (u'Estado de Conservación', {
+            'classes': ('wide', 'extrapretty', ),
+            'fields': ('estado', 'desperfectos')
+        }),
+        (None, {
+            'classes': ('wide', 'extrapretty', ),
+            'fields': ('contacto', 'observaciones')
+        }),
+    )
+
 admin.site.register(DisciplinaArtistica, DisciplinaAdmin)
 admin.site.register(LocalizacionObra, LocalizacionAdmin)
 admin.site.register(ObraDeArte, ObraAdmin)
+admin.site.register(Fotografia, FotografiaAdmin)
