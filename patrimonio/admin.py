@@ -148,9 +148,11 @@ class ImageInline(admin.StackedInline):
 
 class FotografiaAdmin(admin.ModelAdmin):
     list_per_page = 20
-    ordering = ('registro',)
-    list_display = ('registro', 'titulo',)
-    search_fields = ('registro', 'titulo', 'autor', 'fecha',)
+    ordering = ('registro', )
+    list_display = ('registro', 'titulo', )
+    search_fields = ('registro', 'titulo', 'autor', 'fecha', )
+    readonly_fields = ('is_series', )
+    list_filter = ('is_series', 'is_selected', )
 
     inlines = [
         ImageInline,
@@ -164,7 +166,8 @@ class FotografiaAdmin(admin.ModelAdmin):
         (None, {
             'classes': ('wide', 'extrapretty', ),
             'fields': (('titulo', 'autor'), ('fecha', 'medidas'),
-                       ('tematica', 'tecnica'))
+                       ('tematica', 'tecnica'),
+                       ('is_series', 'is_selected'))
         }),
         (u'Estado de Conservación', {
             'classes': ('wide', 'extrapretty', ),
@@ -172,7 +175,7 @@ class FotografiaAdmin(admin.ModelAdmin):
         }),
         (None, {
             'classes': ('wide', 'extrapretty', ),
-            'fields': ('contacto', 'observaciones')
+            'fields': ('ubicacion', 'contacto', 'observaciones')
         }),
     )
 

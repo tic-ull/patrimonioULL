@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- encoding: UTF-8 -*-
 
 #
 #    Copyright 2013-2015
@@ -76,6 +76,8 @@ class FichaInventario(models.Model):
 
     desperfectos = tinymce_models.HTMLField(blank=True)
 
+    ubicacion = tinymce_models.HTMLField(u"Ubicación", blank=True)
+
     contacto = tinymce_models.HTMLField(blank=True)
 
     observaciones = tinymce_models.HTMLField(blank=True)
@@ -99,8 +101,6 @@ class ObraDeArte(FichaInventario):
     localizacion = models.ForeignKey(
         'LocalizacionObra', on_delete=models.PROTECT)
 
-    ubicacion = tinymce_models.HTMLField(u"Ubicación", blank=True)
-
     def imagen_thumb(self):
         if self.imagen:
             thumb_width, thumb_height = imagen_max_size(
@@ -118,7 +118,10 @@ class ObraDeArte(FichaInventario):
 
 
 class Fotografia(FichaInventario):
-    pass
+
+    is_selected = models.NullBooleanField(u'Seleccionada')
+
+    is_series = models.BooleanField(u'Serie de Fotografías', default=False)
 
 
 class Image(models.Model):
