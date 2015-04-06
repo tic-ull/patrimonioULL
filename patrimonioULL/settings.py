@@ -72,7 +72,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'patrimonio',
+    'patrimonio.apps.PatrimonioConfig',
     'logentry_admin',
     'tinymce',
     'django_object_actions',
