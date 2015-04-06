@@ -27,7 +27,7 @@ import os
 
 # ******************************* PATHS *************************************
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -85,18 +85,19 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.doc.XViewMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django_cas.middleware.CASMiddleware',
 )
 # ******************************* MIDDLEWARES ********************************
 
+# ************************* AUTHENTICATION CAS - ULL *************************
 AUTHENTICATION_BACKENDS = (
     'django_cas.backends.CASBackend',
 )
 
-# ************************* AUTHENTICATION CAS - ULL *************************
 CAS_SERVER_URL = 'https://loginpruebas.ull.es/cas-1/'
 CAS_VERSION = 'CAS_2_SAML_1_0'
 # ************************* AUTHENTICATION CAS - ULL *************************
@@ -118,15 +119,30 @@ DATABASES = {
 }
 # ******************************* DATABASES **********************************
 
-MAX_THUMB_SIZE = 100
-MAX_IMAGEN_SIZE = 400
+# ******************************* TEMPLATES **********************************
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+# ******************************* TEMPLATES **********************************
 
-# FIXME: Migrate to patrimonio.settings
-TIPOS_ESTADO = (
-    ('Bueno', 'Bueno'),
-    ('Malo', 'Malo'),
-    ('Regular', 'Regular'),
-)
+# ******************************* EMAIL **************************************
+import socket
+EMAIL_SUBJECT_PREFIX = "patrimonioULL@" + socket.gethostname() + ": "
+SERVER_EMAIL = "patrimonioULL@" + socket.getfqdn(socket.gethostname())
+
+# ******************************* EMAIL **************************************
 
 # ******************************* LOGGING ************************************
 LOG_FILENAME = os.path.join(PROJECT_ROOT, 'patrimonioULL.log')
@@ -196,28 +212,17 @@ LOGGING = {
 }
 # ******************************* LOGGING ************************************
 
-# ******************************* TEMPLATES **********************************
-TEMPLATE_LOADER = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
+MAX_THUMB_SIZE = 100
+MAX_IMAGEN_SIZE = 400
+
+# FIXME: Migrate to patrimonio.settings
+TIPOS_ESTADO = (
+    ('Bueno', 'Bueno'),
+    ('Malo', 'Malo'),
+    ('Regular', 'Regular'),
 )
-# ******************************* TEMPLATES **********************************
 
-# ************************* STATIC FILES *************************************
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-)
-# ************************* STATIC FILES *************************************
-
-# ************************* EMAIL ********************************************
-import socket
-EMAIL_SUBJECT_PREFIX = "patrimonioULL@" + socket.gethostname() + ": "
-SERVER_EMAIL = "patrimonioULL@" + socket.getfqdn(socket.gethostname())
-
-# ************************* EMAIL ********************************************
-
-# ************************* SETTINGS LOCAL ***********************************
+# ******************************* SETTINGS LOCAL *****************************
 try:
     SETTINGS_LOCAL
 except NameError:
@@ -225,4 +230,4 @@ except NameError:
         from settings_local import *
     except ImportError:
         pass
-# ************************* SETTINGS LOCAL ***********************************
+# ******************************* SETTINGS LOCAL *****************************
