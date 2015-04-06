@@ -183,3 +183,6 @@ admin.site.register(DisciplinaArtistica, DisciplinaAdmin)
 admin.site.register(LocalizacionObra, LocalizacionAdmin)
 admin.site.register(ObraDeArte, ObraAdmin)
 admin.site.register(Fotografia, FotografiaAdmin)
+
+# TODO: admin.site.site_url = '{SITE_URL}'.format(SITE_URL=st.SITE_URL)
+admin.site.site_url = None

@@ -34,8 +34,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # ******************************* PATHS *************************************
 
 # ******************************* URLS **************************************
-STATIC_URL = '/patrimonioarte/static/'
-MEDIA_URL = '/patrimonioarte/media/'
+SITE_URL = '/patrimonioarte/'
+STATIC_URL = '{SITE_URL}static/'.format(**locals())
+MEDIA_URL = '{SITE_URL}media/'.format(**locals())
 # ******************************* URLS **************************************
 
 # SECURITY WARNING: keep the secret key used in production secret!
