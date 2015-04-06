@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 import tinymce.models
+import patrimonio.helpers
 
 
 class Migration(migrations.Migration):
@@ -40,7 +41,7 @@ class Migration(migrations.Migration):
             name='Image',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('imagen', models.ImageField(upload_to=b'', verbose_name='Imagen')),
+                ('imagen', models.ImageField(upload_to=patrimonio.helpers.image_path, verbose_name='Imagen')),
                 ('ficha_inventario', models.ForeignKey(to='patrimonio.Fotografia')),
             ],
             options={

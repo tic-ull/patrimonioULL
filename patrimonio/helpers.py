@@ -47,6 +47,14 @@ def name_back(instance, filename):
     return content_file_name(instance, filename, 'back')
 
 
+def image_path(instance, filename):
+    path = 'patrimonio/photograph/%s/%s/%s' % (
+        instance.ficha_inventario.pk % 10,
+        instance.ficha_inventario.pk,
+        filename)
+    return path
+
+
 def imagen_max_size(imagen, max_size):
     if imagen:
         max_imagen_size = max(imagen.width, imagen.height)

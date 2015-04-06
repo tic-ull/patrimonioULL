@@ -23,7 +23,7 @@
 #    <http://www.gnu.org/licenses/>.
 #
 
-from .helpers import name_front, name_back, imagen_max_size
+from .helpers import name_front, name_back, imagen_max_size, image_path
 from django.conf import settings as st
 from django.db import models
 from tinymce import models as tinymce_models
@@ -126,7 +126,7 @@ class Fotografia(FichaInventario):
 
 class Image(models.Model):
     ficha_inventario = models.ForeignKey(Fotografia)
-    imagen = models.ImageField(u'Imagen')
+    imagen = models.ImageField(u'Imagen', upload_to=image_path)
 
     class Meta:
         verbose_name_plural = u"Imágenes"

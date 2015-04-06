@@ -24,7 +24,7 @@
 #
 
 from .models import Image
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, post_delete, pre_delete
 
 
 def update_is_series(sender, instance, **kwargs):
@@ -34,3 +34,10 @@ def update_is_series(sender, instance, **kwargs):
 
 post_save.connect(update_is_series, sender=Image)
 post_delete.connect(update_is_series, sender=Image)
+
+
+def image_delete_file(sender, instance, **kwargs):
+    if hasattr(instance, 'imagen'):
+        instance.imagen.delete(False)
+
+pre_delete.connect(image_delete_file, sender=Image)
