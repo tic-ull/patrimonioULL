@@ -23,9 +23,15 @@
 #    <http://www.gnu.org/licenses/>.
 #
 
-from django.apps import AppConfig
+from django.contrib.admin.sites import AdminSite
+from django.contrib.auth.decorators import login_required
 
 
-class CoreConfig(AppConfig):
-    name = 'core'
-    verbose_name = 'Core'
+class BasicAdminSite(AdminSite):
+    site_header = u'Administración Básica'
+
+    def has_permission(self, request):
+        return request.user.has_perm('auth.basic_staff')
+
+basic_admin_site = BasicAdminSite(name='basic_admin')
+basic_admin_site.login = login_required(basic_admin_site.login)

@@ -71,6 +71,8 @@ class CustomGroupAdmin(GroupAdmin):
     list_display = ('name', membership, )
 
 admin.site.login = login_required(admin.site.login)
+admin.site.site_url = None
+
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.unregister(Group)

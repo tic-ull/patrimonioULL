@@ -8,6 +8,8 @@ from django.conf import settings
 
 from django_cas.models import User
 
+from django.contrib.auth.backends import ModelBackend
+
 __all__ = ['CASBackend']
 
 def _verify_cas1(ticket, service):
@@ -157,7 +159,7 @@ if settings.CAS_VERSION not in _PROTOCOLS:
 _verify = _PROTOCOLS[settings.CAS_VERSION]
 
 
-class CASBackend(object):
+class CASBackend(ModelBackend):
     """CAS authentication backend"""
 
     def authenticate(self, ticket, service, request):

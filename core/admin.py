@@ -23,9 +23,18 @@
 #    <http://www.gnu.org/licenses/>.
 #
 
-from django.apps import AppConfig
+from django.contrib.admin.templatetags.admin_modify import register
+from django.contrib.admin.templatetags.admin_modify import submit_row as osr
 
 
-class CoreConfig(AppConfig):
-    name = 'core'
-    verbose_name = 'Core'
+@register.inclusion_tag('admin/submit_line.html', takes_context=True)
+def submit_row(context):
+    ctx = osr(context)  # Here is Django's logic => it ignores the context
+    if 'show_save_and_continue' in context:
+        ctx['show_save_and_continue'] = context['show_save_and_continue']
+    if 'show_save' in context:
+        ctx['show_save'] = context['show_save']
+    return ctx
+
+import admin_advanced
+import admin_basic

@@ -23,6 +23,7 @@
 #    <http://www.gnu.org/licenses/>.
 #
 
+from core.admin_basic import basic_admin_site
 from django.conf import settings as st
 from django.conf.urls import include, url
 from django.conf.urls.static import static
@@ -32,6 +33,7 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^patrimonioarte/admin/', include(admin.site.urls)),
+    url(r'^patrimonioarte/basic-admin/', include(basic_admin_site.urls)),
     url(r'^patrimonioarte/tinymce/', include('tinymce.urls')),
     url(r'^patrimonioarte/accounts/login/$',
         'django_cas.views.login', name='login'),
