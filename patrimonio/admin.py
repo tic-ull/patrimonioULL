@@ -76,14 +76,17 @@ class LocalizacionFilter(admin.SimpleListFilter):
             return queryset
 
 
+@admin.register(DisciplinaArtistica)
 class DisciplinaAdmin(admin.ModelAdmin):
     list_display = ('disciplina',)
 
 
+@admin.register(LocalizacionObra)
 class LocalizacionAdmin(admin.ModelAdmin):
     list_display = ('localizacion', 'codigo')
 
 
+@admin.register(ObraDeArte)
 class ObraAdmin(DjangoObjectActions, admin.ModelAdmin):
     list_per_page = 20
     ordering = ('registro',)
@@ -135,7 +138,7 @@ class ObraAdmin(DjangoObjectActions, admin.ModelAdmin):
 
 class ImageInline(admin.StackedInline):
     model = Image
-    extra = 0
+    extra = 1
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.name is 'imagen':
@@ -146,6 +149,7 @@ class ImageInline(admin.StackedInline):
                      self).formfield_for_dbfield(db_field, **kwargs)
 
 
+@admin.register(Fotografia)
 class FotografiaAdmin(admin.ModelAdmin):
     list_per_page = 20
     ordering = ('registro', )
@@ -178,11 +182,6 @@ class FotografiaAdmin(admin.ModelAdmin):
             'fields': ('ubicacion', 'contacto', 'observaciones')
         }),
     )
-
-admin.site.register(DisciplinaArtistica, DisciplinaAdmin)
-admin.site.register(LocalizacionObra, LocalizacionAdmin)
-admin.site.register(ObraDeArte, ObraAdmin)
-admin.site.register(Fotografia, FotografiaAdmin)
 
 # TODO: admin.site.site_url = '{SITE_URL}'.format(SITE_URL=st.SITE_URL)
 admin.site.site_url = None
