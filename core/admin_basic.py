@@ -29,6 +29,7 @@ from django.contrib.auth.decorators import login_required
 
 class BasicAdminSite(AdminSite):
     site_header = u'Administración Básica'
+    site_url = None
 
     def has_permission(self, request):
         return request.user.has_perm('auth.basic_staff')
