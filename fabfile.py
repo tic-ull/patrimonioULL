@@ -26,7 +26,7 @@
 from fabric.api import env, sudo, local
 
 env.project_name = 'patrimonioULL'
-env.repo = 'https://bitbucket.org/rayco/patrimonioull'
+env.repo = 'https://github.com/Rayco/patrimonioULL.git'
 env.branch = 'master'
 
 
