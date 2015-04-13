@@ -23,12 +23,20 @@
 #    <http://www.gnu.org/licenses/>.
 #
 
-from django.apps import AppConfig
+from django.contrib.auth.signals import user_logged_in
 
 
-class CoreConfig(AppConfig):
-    name = 'core'
-    verbose_name = 'Core'
+def update_user(user, request, **kwargs):
+    if request and 'attributes' in request.session:
+        cas_info = request.session['attributes']
+        if 'first_name' in cas_info:
+            user.first_name = cas_info['first_name']
+        if 'last_name' in cas_info:
+            user.last_name = cas_info['last_name']
+        if 'email' in cas_info:
+            user.email = cas_info['email']
+        if 'username' in cas_info:
+            user.username = cas_info['username']
+        user.save()
 
-    def ready(self):
-        import receivers
+user_logged_in.connect(update_user, dispatch_uid='update-profile')
