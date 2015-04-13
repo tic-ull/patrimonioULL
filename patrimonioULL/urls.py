@@ -35,9 +35,9 @@ urlpatterns = [
     url(r'^patrimonioarte/admin/', include(admin.site.urls)),
     url(r'^patrimonioarte/basic-admin/', include(basic_admin_site.urls)),
     url(r'^patrimonioarte/tinymce/', include('tinymce.urls')),
-    url(r'^accounts/login/$',
+    url(r'^patrimonioarte/accounts/login/$',
         'django_cas_ng.views.login', name='login'),
-    url(r'^accounts/logout/$',
+    url(r'^patrimonioarte/accounts/logout/$',
         'django_cas_ng.views.logout', name='logout'),
 ]
 
