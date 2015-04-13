@@ -23,8 +23,8 @@
 #    <http://www.gnu.org/licenses/>.
 #
 
-from .admin_advanced import ObraAdmin
-from .models import ObraDeArte
+from .admin_advanced import ObraAdmin, FotografiaAdmin, ImageInline
+from .models import ObraDeArte, Fotografia
 from core.admin_basic import basic_admin_site
 from django import forms
 from django.forms.util import flatatt
@@ -75,4 +75,43 @@ class ObraBasicAdmin(ObraAdmin):
             del actions['delete_selected']
         return actions
 
+
+class ReadonlyImageInline(ImageInline):
+    readonly_fields = ('imagen', )
+
+
+class FotografiaBasicAdmin(FotografiaAdmin):
+
+    readonly_fields = (
+        'registro', 'titulo', 'autor', 'fecha', 'medidas', 'tematica',
+        'tecnica', 'estado', 'is_series', 'is_selected')
+
+    inlines = [
+        ReadonlyImageInline,
+    ]
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        if db_field.name in (
+                'desperfectos', 'ubicacion', 'contacto', 'observaciones'):
+            kwargs['widget'] = ReadonlyTextArea()
+        return super(FotografiaBasicAdmin, self).formfield_for_dbfield(
+            db_field, **kwargs)
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        extra_context = extra_context or {}
+        extra_context.update({
+            'show_save_and_continue': False,
+            'show_save': False,
+        })
+        return super(FotografiaBasicAdmin, self).change_view(
+            request, object_id, form_url, extra_context=extra_context)
+
+    def get_actions(self, request):
+        """ Remove action delete object from list of actions """
+        actions = super(FotografiaBasicAdmin, self).get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions
+
 basic_admin_site.register(ObraDeArte, ObraBasicAdmin)
+basic_admin_site.register(Fotografia, FotografiaBasicAdmin)
