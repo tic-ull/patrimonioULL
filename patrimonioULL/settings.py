@@ -109,6 +109,7 @@ CAS_REDIRECT_URL = SITE_URL
 CAS_RETRY_LOGIN = True
 CAS_TIPO_CUENTA_NOAUT = ['colectivo', ]
 CAS_USERNAME_ATTRIBUTE = 'username'
+LOGIN_URL = 'login'
 # ************************* AUTHENTICATION CAS - ULL *************************
 
 ROOT_URLCONF = 'patrimonioULL.urls'
