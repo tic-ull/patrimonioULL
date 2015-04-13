@@ -91,17 +91,24 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django_cas.middleware.CASMiddleware',
 )
 # ******************************* MIDDLEWARES ********************************
 
 # ************************* AUTHENTICATION CAS - ULL *************************
 AUTHENTICATION_BACKENDS = (
-    'django_cas.backends.CASBackend',
+    'core.backends.CASBackend',
 )
 
 CAS_SERVER_URL = 'https://loginpruebas.ull.es/cas-1/'
 CAS_VERSION = 'CAS_2_SAML_1_0'
+CAS_ADMIN_PREFIX = 'admin'
+CAS_EXTRA_LOGIN_PARAMS = ''
+CAS_IGNORE_REFERER = False
+CAS_LOGOUT_COMPLETELY = True
+CAS_REDIRECT_URL = SITE_URL
+CAS_RETRY_LOGIN = True
+CAS_TIPO_CUENTA_NOAUT = ['colectivo', ]
+CAS_USERNAME_ATTRIBUTE = 'username'
 # ************************* AUTHENTICATION CAS - ULL *************************
 
 ROOT_URLCONF = 'patrimonioULL.urls'
