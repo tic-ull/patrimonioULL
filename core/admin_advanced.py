@@ -57,8 +57,6 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = remove_fieldsets(
         cls=UserAdmin, field_name='user_permissions', new_field='permissions')
 
-    list_filter = UserAdmin.list_filter + ('groups__name', )
-
 
 class CustomGroupAdmin(GroupAdmin):
     form = CustomGroupForm
