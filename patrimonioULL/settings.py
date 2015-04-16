@@ -110,6 +110,7 @@ CAS_RETRY_LOGIN = True
 CAS_TIPO_CUENTA_NOAUT = ['colectivo', ]
 CAS_USERNAME_ATTRIBUTE = 'username'
 LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
 # ************************* AUTHENTICATION CAS - ULL *************************
 
 ROOT_URLCONF = 'patrimonioULL.urls'
