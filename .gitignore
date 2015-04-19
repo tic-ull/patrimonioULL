@@ -3,8 +3,9 @@
 *.py[cod]
 *.swp
 *.log
-patrimonioULL/settings_local.py
+settings_local.py
 .ropeproject/
 .idea/
 collected_static
 virtualenv
+media
