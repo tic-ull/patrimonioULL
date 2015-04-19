@@ -89,7 +89,7 @@ class LocalizacionAdmin(admin.ModelAdmin):
 @admin.register(ObraDeArte)
 class ObraAdmin(DjangoObjectActions, admin.ModelAdmin):
     list_per_page = 20
-    ordering = ('registro',)
+    ordering = ('-fecha', 'registro', )
     list_display = ('registro', 'titulo', 'fecha', 'imagen_thumb', )
     search_fields = ('registro', 'titulo', 'autor', 'fecha')
     list_filter = (DisciplinaFilter, LocalizacionFilter, 'fecha', )
@@ -152,7 +152,7 @@ class ImageInline(admin.StackedInline):
 @admin.register(Fotografia)
 class FotografiaAdmin(admin.ModelAdmin):
     list_per_page = 20
-    ordering = ('registro', )
+    ordering = ('-fecha', 'registro', )
     list_display = ('registro', 'titulo', 'fecha', 'is_series', 'is_selected', )
     search_fields = ('registro', 'titulo', 'autor', 'fecha', )
     readonly_fields = ('is_series', )
