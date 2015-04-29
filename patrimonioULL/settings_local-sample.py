@@ -26,6 +26,8 @@
 SETTINGS_LOCAL = True
 from .settings import *
 
+LOG_ROOT = '/tmp/'
+
 DATABASES['default']['NAME'] = 'name'
 DATABASES['default']['USER'] = 'user'
 DATABASES['default']['PASSWORD'] = 'password'

@@ -28,6 +28,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin, GroupAdmin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
+from django_cas_ng.views import logout
 
 
 def remove_fieldsets(cls, field_name, message=None, new_field=None):
@@ -57,8 +58,6 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = remove_fieldsets(
         cls=UserAdmin, field_name='user_permissions', new_field='permissions')
 
-    list_filter = UserAdmin.list_filter + ('groups__name', )
-
 
 class CustomGroupAdmin(GroupAdmin):
     form = CustomGroupForm
@@ -71,6 +70,7 @@ class CustomGroupAdmin(GroupAdmin):
     list_display = ('name', membership, )
 
 admin.site.login = login_required(admin.site.login)
+admin.site.logout = logout
 admin.site.site_url = None
 
 admin.site.unregister(User)

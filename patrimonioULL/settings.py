@@ -31,6 +31,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+LOG_ROOT = PROJECT_ROOT
 # ******************************* PATHS *************************************
 
 # ******************************* URLS **************************************
@@ -110,6 +111,7 @@ CAS_RETRY_LOGIN = True
 CAS_TIPO_CUENTA_NOAUT = ['colectivo', ]
 CAS_USERNAME_ATTRIBUTE = 'username'
 LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
 # ************************* AUTHENTICATION CAS - ULL *************************
 
 ROOT_URLCONF = 'patrimonioULL.urls'
@@ -154,8 +156,28 @@ SERVER_EMAIL = "patrimonioULL@" + socket.getfqdn(socket.gethostname())
 
 # ******************************* EMAIL **************************************
 
+MAX_THUMB_SIZE = 100
+MAX_IMAGEN_SIZE = 400
+
+# FIXME: Migrate to patrimonio.settings
+TIPOS_ESTADO = (
+    ('Bueno', 'Bueno'),
+    ('Malo', 'Malo'),
+    ('Regular', 'Regular'),
+)
+
+# ******************************* SETTINGS LOCAL *****************************
+try:
+    SETTINGS_LOCAL
+except NameError:
+    try:
+        from settings_local import *
+    except ImportError:
+        pass
+# ******************************* SETTINGS LOCAL *****************************
+
 # ******************************* LOGGING ************************************
-LOG_FILENAME = os.path.join(PROJECT_ROOT, 'patrimonioULL.log')
+LOG_FILENAME = os.path.join(LOG_ROOT, 'patrimonioULL.log')
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -221,23 +243,3 @@ LOGGING = {
     }
 }
 # ******************************* LOGGING ************************************
-
-MAX_THUMB_SIZE = 100
-MAX_IMAGEN_SIZE = 400
-
-# FIXME: Migrate to patrimonio.settings
-TIPOS_ESTADO = (
-    ('Bueno', 'Bueno'),
-    ('Malo', 'Malo'),
-    ('Regular', 'Regular'),
-)
-
-# ******************************* SETTINGS LOCAL *****************************
-try:
-    SETTINGS_LOCAL
-except NameError:
-    try:
-        from settings_local import *
-    except ImportError:
-        pass
-# ******************************* SETTINGS LOCAL *****************************
