@@ -32,3 +32,5 @@ DATABASES['default']['NAME'] = 'name'
 DATABASES['default']['USER'] = 'user'
 DATABASES['default']['PASSWORD'] = 'password'
 DATABASES['default']['HOST'] = 'localhost'
+
+GANALYTICS_TRACKING_CODE = 'UA-XXXXXXXX-XX'
