@@ -1,6 +1,7 @@
 Django<1.9
 django-debug-toolbar
 django-extensions
+django-ganalytics
 django-logentry-admin
 django-object-actions
 django-tinymce
