@@ -166,6 +166,13 @@ TIPOS_ESTADO = (
     ('Regular', 'Regular'),
 )
 
+# ************************* GOOGLE ANALYTICS *************************
+INSTALLED_APPS += ('ganalytics', )
+GANALYTICS_TRACKING_CODE = ''
+TEMPLATES[0]['DIRS'] += ['templates']
+
+# ************************* GOOGLE ANALYTICS *************************
+
 # ******************************* SETTINGS LOCAL *****************************
 try:
     SETTINGS_LOCAL
