@@ -45,7 +45,6 @@ SECRET_KEY = 'y6m(pfx#t*s+=6zb_3!0n&m)gios^8d)kv0@90x2)h7r1-hhr1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-TEMPLATE_DEBUG = True
 
 INTERNAL_IPS = ('127.0.0.1', )
 ALLOWED_HOSTS = ['*']
@@ -144,6 +143,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+        'debug': True,
         },
     },
 ]
@@ -170,7 +170,6 @@ TIPOS_ESTADO = (
 INSTALLED_APPS += ('ganalytics', )
 GANALYTICS_TRACKING_CODE = ''
 TEMPLATES[0]['DIRS'] += ['templates']
-
 # ************************* GOOGLE ANALYTICS *************************
 
 # ******************************* SETTINGS LOCAL *****************************
